@@ -1,4 +1,5 @@
-const { createNewOrder, getAllOrders } = require("../requests/Orders.Requests");
+const { sequelize } = require("../database/Connection");
+const { createNewOrder, getAllOrders, createOrderItems } = require("../requests/Orders.Requests");
 
 const OrdersEndpoints = (app) => {
   // get all orders
@@ -12,16 +13,33 @@ const OrdersEndpoints = (app) => {
     }
   });
 
-  // get all orders
+  // create new order
   app.post("/createNewOrder", async (req, res) => {
-    const { order } = req.body;
+
+    const customer  = req.body.customer;
+    const productsArray = req.body.products;
+
+    const t = await sequelize.transaction();
 
     try {
-      const data = await createNewOrder(order);
+      const newOrder = await createNewOrder(customer, t);
+      const newOrderId = newOrder["o_id"];
+
+      
+      for(var i = 0; i < productsArray.length; i++){
+        
+         await createOrderItems(productsArray[i], newOrderId, t);
+       
+      }
+     
+
+      await t.commit();
+      
       res.status(200).json({ msg: "order created" });
     } catch (error) {
       console.log(error);
       res.status(200).json({ msg: "Could not create order" });
+      await t.rollback();
     }
   });
 };
