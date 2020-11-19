@@ -1,6 +1,8 @@
 const { Orders } = require("./OrdersModel");
 const { Customer } = require("./CustomersModel");
 const { OrderItems } = require("./OrderItemsModel");
+const { Product } = require("./ProductsModel");
+const { ProductTypeModel } = require("./ProductTypeModel");
 // import all models that need relations
 
 const AssociationModels = () => {
@@ -19,10 +21,13 @@ const AssociationModels = () => {
     foreignKey: "order_fk",
   });
 
+  // products and product types
   return {
     Orders,
     Customer,
     OrderItems,
+    Product,
+    ProductTypeModel,
   };
 };
 

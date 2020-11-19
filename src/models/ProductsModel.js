@@ -1,6 +1,5 @@
 const { DataTypes, Model } = require("sequelize");
 const { sequelize } = require("../database/Connection");
-const { ProductTypeModel } = require("./ProductTypeModel");
 const { Manufacture } = require("./ManufacturersModel");
 
 class Products extends Model {}
@@ -17,6 +16,7 @@ Products.init(
     p_description: { type: DataTypes.TEXT, allowNull: false },
     product_type_fk: { type: DataTypes.INTEGER(11), allowNull: false },
     manufacturer_fk: { type: DataTypes.INTEGER(11), allowNull: false },
+    image: { type: DataTypes.STRING(200), allowNull: true },
   },
   {
     tableName: "products",
