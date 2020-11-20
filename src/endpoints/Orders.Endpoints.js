@@ -25,12 +25,12 @@ const OrdersEndpoints = (app) => {
       const newOrder = await createNewOrder(customer, t);
       const newOrderId = newOrder["o_id"];
 
+
+      await Promise.all(productsArray.map( async (product) => {
+
+        await createOrderItems(product, newOrderId, t);
+      }));
       
-      for(var i = 0; i < productsArray.length; i++){
-        
-         await createOrderItems(productsArray[i], newOrderId, t);
-       
-      }
      
 
       await t.commit();
