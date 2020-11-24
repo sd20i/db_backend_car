@@ -9,7 +9,8 @@ Create a .ENV file in the root directory with following fields.
 `DB_HOST=127.0.0.1`  
 `DB_USER=<your mysql username>`  
 `DB_PASSWORD=<your mysql password>`  
-`DB_DATABASE=carBuilder DB_DIALECT=mysql`  
+`DB_DATABASE=carBuilder`   
+`DB_DIALECT=mysql`  
 `DB_PORT=<your mysql port. most likely 3306>`
 
 Run application in development mode, will provide nodemon for continues recompile.  
