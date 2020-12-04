@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const admin = require("firebase-admin");
 const { dbConnect } = require("./database/Connection");
 const {
   RootEndpoint,
@@ -24,6 +25,15 @@ app.use("*", function (req, res, next) {
   next();
 });
 app.options("*", cors());
+
+// firebase admin
+const googleKey =
+  process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+  `./carbuilderServiceAccount.json`;
+
+admin.initializeApp({
+  credential: admin.credential.cert(googleKey),
+});
 
 app.listen(PORT, async () => {
   await dbConnect();
