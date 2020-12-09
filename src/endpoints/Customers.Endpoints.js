@@ -1,16 +1,50 @@
-const { getUserById } = require("../requests/Customers.Requests");
+const {
+  createNewUser,
+  updateCustomer,
+} = require("../requests/Customers.Requests");
+const verifyToken = require("../helpers/verifyToken");
 
-const CustomersEndpoints = (app) => {
-  app.post("/getUserById", async (req, res) => {
-    const { userId } = req.body;
+const CustomersEndpoints = (app, admin) => {
+  // sign in user and get verified token back
+  app.post("/signIn", async (req, res) => {
+    const { idToken } = req.body;
     try {
-      let data = await getUserById(userId);
-      res.status(200).json({ msg: "user data", data: data });
+      const verifiedToken = await verifyToken(admin, idToken);
+
+      if (verifyToken) {
+        const user = await createNewUser(verifiedToken);
+        let data = user[0].dataValues;
+        res.status(200).json({ msg: "user", data: data });
+      } else {
+        res.status(200).json({ msg: "no user", data: {} });
+      }
     } catch (error) {
       console.log(error);
-      res.status(400).json({ msg: "could not fetch user", data: {} });
+      res.status(404).json({ msg: "not working", data: {} });
+    }
+  });
+
+  // update user info
+  app.post("/updateuser", async (req, res) => {
+    const { customer, idToken } = req.body;
+
+    try {
+      const verifiedToken = await verifyToken(admin, idToken);
+
+      if (verifyToken !== false) {
+        const data = await updateCustomer(customer);
+
+        res.status(200).json({ msg: "user", data: data });
+      } else {
+        res.status(200).json({ msg: "no user", data: {} });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(404).json({ msg: "not working", data: {} });
     }
   });
 };
+
+// create user
 
 module.exports = CustomersEndpoints;

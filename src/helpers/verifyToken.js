@@ -4,17 +4,14 @@ const verifyIdToken = (admin, idToken) => {
       .auth()
       .verifyIdToken(idToken)
       .then((verifiedToken) => {
-        console.log(verifiedToken);
         return verifiedToken;
       })
       .catch((error) => {
-        console.log("error ", error);
-        return null;
+        return false;
       });
   } catch (tokenError) {
-    console.log("token error ", tokenError);
-    return null;
+    return false;
   }
 };
 
-export default verifyIdToken;
+module.exports = verifyIdToken;
