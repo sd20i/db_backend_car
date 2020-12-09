@@ -45,4 +45,4 @@ app.listen(PORT, async () => {
 RootEndpoint(app);
 ProductsEndpoints(app);
 OrdersEndpoints(app);
-CustomersEndpoints(app);
+CustomersEndpoints(app, admin);
