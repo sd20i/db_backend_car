@@ -1,5 +1,10 @@
 const { sequelize } = require("../database/Connection");
-const { createNewOrder, getAllOrders, createOrderItems } = require("../requests/Orders.Requests");
+const {
+  createNewOrder,
+  getAllOrders,
+  createOrderItems,
+  getOrderByCustomer,
+} = require("../requests/Orders.Requests");
 
 const OrdersEndpoints = (app) => {
   // get all orders
@@ -15,31 +20,42 @@ const OrdersEndpoints = (app) => {
 
   // create new order
   app.post("/createNewOrder", async (req, res) => {
+    const { customerId, productsArray } = req.body;
 
-    const customer  = req.body.customer;
-    const productsArray = req.body.products;
-
+    console.log(customerId);
+    console.log(productsArray);
     const t = await sequelize.transaction();
 
     try {
-      const newOrder = await createNewOrder(customer, t);
+      const newOrder = await createNewOrder(customerId, t);
       const newOrderId = newOrder["o_id"];
 
-
-      await Promise.all(productsArray.map( async (product) => {
-
-        await createOrderItems(product, newOrderId, t);
-      }));
-      
-     
+      await Promise.all(
+        productsArray.map(async (product) => {
+          await createOrderItems(product, newOrderId, t);
+        })
+      );
 
       await t.commit();
-      
+
       res.status(200).json({ msg: "order created" });
     } catch (error) {
       console.log(error);
       res.status(200).json({ msg: "Could not create order" });
       await t.rollback();
+    }
+  });
+
+  // get orders by customer
+  app.post("/getOrderByCustomer", async (req, res) => {
+    const { customerId, idToken } = req.body;
+
+    try {
+      const data = await getOrderByCustomer(customerId);
+      res.status(200).json({ msg: "order", data: data });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ msg: "Order error", data: {} });
     }
   });
 };

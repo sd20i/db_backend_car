@@ -1,7 +1,7 @@
+const { OrderItem } = require("./OrderItemsModel");
 const { Orders } = require("./OrdersModel");
 const { Customer } = require("./CustomersModel");
-const { OrderItems } = require("./OrderItemsModel");
-const { Product } = require("./ProductsModel");
+const { Products } = require("./ProductsModel");
 const { ProductTypeModel } = require("./ProductTypeModel");
 // import all models that need relations
 
@@ -16,17 +16,25 @@ const AssociationModels = () => {
   });
 
   // orders and order items
-  OrderItems.belongsTo(Orders, {
+  OrderItem.belongsTo(Orders, {
     sourceKey: "o_id",
     foreignKey: "order_fk",
   });
 
-  // products and product types
+  Orders.hasMany(OrderItem, {
+    foreignKey: "order_fk",
+  });
+
+  OrderItem.hasOne(Products, {
+    sourceKey: "product_fk",
+    foreignKey: "p_id",
+  });
+
   return {
+    OrderItem,
     Orders,
     Customer,
-    OrderItems,
-    Product,
+    Products,
     ProductTypeModel,
   };
 };
