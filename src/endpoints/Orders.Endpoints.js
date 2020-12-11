@@ -21,9 +21,6 @@ const OrdersEndpoints = (app) => {
   // create new order
   app.post("/createNewOrder", async (req, res) => {
     const { customerId, productsArray } = req.body;
-
-    console.log(customerId);
-    console.log(productsArray);
     const t = await sequelize.transaction();
 
     try {
