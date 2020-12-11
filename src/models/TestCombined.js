@@ -3,6 +3,7 @@ const { Orders } = require("./OrdersModel");
 const { Customer } = require("./CustomersModel");
 const { Products } = require("./ProductsModel");
 const { ProductTypeModel } = require("./ProductTypeModel");
+const { Manufacture } = require("./ManufacturersModel");
 // import all models that need relations
 
 const AssociationModels = () => {
@@ -25,9 +26,16 @@ const AssociationModels = () => {
     foreignKey: "order_fk",
   });
 
+  // order to products
   OrderItem.hasOne(Products, {
     sourceKey: "product_fk",
     foreignKey: "p_id",
+  });
+
+  // products to type
+  Products.hasOne(ProductTypeModel, {
+    sourceKey: "product_type_fk",
+    foreignKey: "pt_id",
   });
 
   return {
@@ -36,6 +44,7 @@ const AssociationModels = () => {
     Customer,
     Products,
     ProductTypeModel,
+    Manufacture,
   };
 };
 

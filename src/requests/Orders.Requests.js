@@ -34,7 +34,10 @@ const getOrderByCustomer = async (customerId) => {
     include: [
       {
         model: AssociationModels().OrderItem,
-        include: { model: AssociationModels().Products },
+        include: {
+          model: AssociationModels().Products,
+          include: [{ model: AssociationModels().Manufacture }],
+        },
       },
     ],
     order: [["createdAt", "DESC"]],
