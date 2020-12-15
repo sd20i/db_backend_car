@@ -36,6 +36,8 @@ admin.initializeApp({
 });
 const firebaseDb = admin.firestore();
 
+const firebaseDb = admin.firestore();
+
 app.listen(PORT, async () => {
   await dbConnect();
   console.log(`\x1b[36m%s\x1b[0m`, `Server is up on ${PORT}`);

@@ -5,6 +5,7 @@ const {
 const addDataToFirestore = require("../firestore/firestoredb");
 
 const verifyToken = require("../helpers/verifyToken");
+const addDataToFirestore = require("../firebase/firestoredb");
 
 const CustomersEndpoints = (app, admin, firebaseDb) => {
   // sign in user and get verified token back
