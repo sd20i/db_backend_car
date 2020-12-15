@@ -5,7 +5,6 @@ const {
 const addDataToFirestore = require("../firestore/firestoredb");
 
 const verifyToken = require("../helpers/verifyToken");
-const addDataToFirestore = require("../firebase/firestoredb");
 
 const CustomersEndpoints = (app, admin, firebaseDb) => {
   // sign in user and get verified token back
@@ -18,7 +17,7 @@ const CustomersEndpoints = (app, admin, firebaseDb) => {
         const user = await createNewUser(verifiedToken);
         let data = user[0].dataValues;
         // insert user into firebase doc
-        await addDataToFirestore("users", "hanne", verifiedToken, firebaseDb);
+        await addDataToFirestore("users", verifiedToken, firebaseDb);
         res.status(200).json({ msg: "user", data: data });
       } else {
         res.status(200).json({ msg: "no user", data: {} });
