@@ -1,5 +1,6 @@
 const { Orders } = require("../models/OrdersModel");
 const { OrderItem } = require("../models/OrderItemsModel");
+const { Manufacture } = require("../models/ManufacturersModel");
 const AssociationModels = require("../models/TestCombined");
 const { sequelize } = require("../database/Connection");
 
@@ -36,7 +37,7 @@ const getOrderByCustomer = async (customerId) => {
         model: AssociationModels().OrderItem,
         include: {
           model: AssociationModels().Products,
-          include: [{ model: AssociationModels().Manufacture }],
+          include: { model: Manufacture },
         },
       },
     ],
