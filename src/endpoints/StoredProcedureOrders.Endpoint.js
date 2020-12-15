@@ -5,20 +5,19 @@ const StoredProcedureOrdersEndpoint = (app) => {
   app.post("/newOrderStoredProcedure", async (req, res) => {
     try {
 
-      const { customer_fk, productsArray }  = req.body;
+      const { customer, products }  = req.body;
 
-     //const newOrderId = await newOrderStoredProcedure(customer_fk);
+      await newOrderStoredProcedure(customer);
 
-     //console.log("New OrderId: "+newOrderId)
+      const newOrderId = await getNewOrderId()
 
-     const newOrderId = await getNewOrderId();
-     console.log("New OrderId: "+newOrderId)
-/*
-      await Promise.all(productsArray.map( async (product) => {
+      console.log(newOrderId)
+
+      await Promise.all(products.map( async (product) => {
         
-        await newOrderItemStoredProcedure(product, newOrderId);
-      }));
-*/
+      await newOrderItemStoredProcedure(product, newOrderId);
+    }));
+
       res.status(200).json({ msg: "orders created"});
     } catch (error) {
       console.log("Endpoint error: "+error);
