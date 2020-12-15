@@ -17,7 +17,7 @@ const CustomersEndpoints = (app, admin, firebaseDb) => {
         const user = await createNewUser(verifiedToken);
         let data = user[0].dataValues;
         // insert user into firebase doc
-        await addDataToFirestore("users", "hanne", verifiedToken, firebaseDb);
+        await addDataToFirestore("users", verifiedToken, firebaseDb);
         res.status(200).json({ msg: "user", data: data });
       } else {
         res.status(200).json({ msg: "no user", data: {} });
