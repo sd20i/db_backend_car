@@ -9,6 +9,8 @@ const {
   ProductsEndpoints,
   OrdersEndpoints,
   CustomersEndpoints,
+  ViewMoneyEndpoints,
+  StoredProcedureOrdersEndpoint
 } = require("./endpoints");
 
 const app = express();
@@ -43,7 +45,11 @@ app.listen(PORT, async () => {
 });
 
 // endpoints access
+
+//we have a database connection with sequelize, do we need another server to connect to mysql without sequelize??
 RootEndpoint(app);
 ProductsEndpoints(app);
 OrdersEndpoints(app);
 CustomersEndpoints(app, admin, firebaseDb);
+ViewMoneyEndpoints(app);
+StoredProcedureOrdersEndpoint(app);
