@@ -34,6 +34,7 @@ const googleKey =
 admin.initializeApp({
   credential: admin.credential.cert(googleKey),
 });
+const firebaseDb = admin.firestore();
 
 app.listen(PORT, async () => {
   await dbConnect();
@@ -45,4 +46,4 @@ app.listen(PORT, async () => {
 RootEndpoint(app);
 ProductsEndpoints(app);
 OrdersEndpoints(app);
-CustomersEndpoints(app, admin);
+CustomersEndpoints(app, admin, firebaseDb);

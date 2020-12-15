@@ -19,10 +19,9 @@ Run application in development mode, will provide nodemon for continues recompil
 Build application.  
 `$ yarn run build`
 
-### Docker.
+### Firebase.
 
-run with docker. (not enabled yet)  
-`$ docker-compose up`
+A firebase service account key is required.
 
 ### App info.
 
