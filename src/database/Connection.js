@@ -19,15 +19,6 @@ const config = {
 
 const mysqlConnect = mysql.createConnection(config);
 
-/**
- * 
- * mysqlConnect.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected to database carBuilder through mysql!");
-});
- */
-
-
 const sequelize = new Sequelize(database, user, password, {
   host: host,
   dialect: dialect,

@@ -8,7 +8,6 @@ const newOrderStoredProcedure = async (customerId ) => {
     if (error) {
         return console.error(error.message);
     }
-    console.log("This is the create new order request::::::::::::::::"+results);
     
     });
  
@@ -39,6 +38,16 @@ const newOrderStoredProcedure = async (customerId ) => {
   };
 
   
-  
+  const purchaseStoredProcedure = async (orderId) => {
+
+    const sql = "return_total_order_price(?,?)";
+
+    mysqlConnect.query(sql, [orderId, total], (error, results) => {
+    
+        if (error) return console.error(error.message);
+        
+    });
+
+  };
   
   module.exports = { newOrderStoredProcedure, newOrderItemStoredProcedure, getNewOrderId };
