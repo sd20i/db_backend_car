@@ -38,16 +38,26 @@ const newOrderStoredProcedure = async (customerId ) => {
   };
 
   
-  const purchaseStoredProcedure = async (orderId) => {
+  const purchaseStoredProcedure = async (orderId, customerId, creditCardId) => {
 
-    const sql = "return_total_order_price(?,?)";
-
-    mysqlConnect.query(sql, [orderId, total], (error, results) => {
+    const getTotalPriceSql = "CALL return_total_order_price(?)";
     
-        if (error) return console.error(error.message);
-        
-    });
+    const totalPrice = await mysqlConnect.promise().query(getTotalPriceSql, [orderId])
+    .then(([ rows,fields ]) => {
+      
+        return rows[0][0].total_price ;
+    }).catch(console.log)
+
+    console.log(totalPrice)
+
+    const sql = "CALL SP_NEW_INVOICE(?,?,?,?)";
+
+    mysqlConnect.query(sql, [totalPrice, creditCardId, orderId, customerId],  (error, results) => {
+
+      if (error) return console.error(error.message);
+   });
+
 
   };
   
-  module.exports = { newOrderStoredProcedure, newOrderItemStoredProcedure, getNewOrderId };
+  module.exports = { newOrderStoredProcedure, newOrderItemStoredProcedure, getNewOrderId, purchaseStoredProcedure };

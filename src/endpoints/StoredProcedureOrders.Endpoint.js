@@ -1,5 +1,5 @@
 
-const { newOrderStoredProcedure, newOrderItemStoredProcedure, getNewOrderId } = require("../requests/StoredProcedureOrders.Requests");
+const { newOrderStoredProcedure, newOrderItemStoredProcedure, getNewOrderId, purchaseStoredProcedure } = require("../requests/StoredProcedureOrders.Requests");
 
 const StoredProcedureOrdersEndpoint = (app) => {
   app.post("/newOrderStoredProcedure", async (req, res) => {
@@ -16,7 +16,9 @@ const StoredProcedureOrdersEndpoint = (app) => {
       await Promise.all(products.map( async (product) => {
         
       await newOrderItemStoredProcedure(product, newOrderId);
-    }));
+      }));
+
+      await purchaseStoredProcedure(newOrderId, customer, 2);
 
       res.status(200).json({ msg: "orders created"});
     } catch (error) {
