@@ -2,7 +2,6 @@ const AssociationModels = require("../models/TestCombined");
 const { Customer } = require("../models/CustomersModel");
 
 const createNewUser = async (verifiedToken) => {
-  console.log("This should include: user_id, name, email. is this true?");
   try {
     return await Customer.findOrCreate({
       where: { c_fb_id: verifiedToken.user_id },
