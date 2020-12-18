@@ -4,6 +4,7 @@ const OrdersEndpoints = require("./Orders.Endpoints");
 const CustomersEndpoints = require("./Customers.Endpoints");
 const ViewMoneyEndpoints = require("./ViewMoney.Endpoints");
 const StoredProcedureOrdersEndpoint = require("./StoredProcedureOrders.Endpoint");
+const DeleteProductEndpoint =  require("./DeleteProduct.Endpoint");
 
 module.exports = {
   RootEndpoint,
@@ -11,5 +12,6 @@ module.exports = {
   OrdersEndpoints,
   CustomersEndpoints,
   ViewMoneyEndpoints,
-  StoredProcedureOrdersEndpoint
+  StoredProcedureOrdersEndpoint,
+  DeleteProductEndpoint
 };

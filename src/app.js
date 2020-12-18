@@ -10,7 +10,8 @@ const {
   OrdersEndpoints,
   CustomersEndpoints,
   ViewMoneyEndpoints,
-  StoredProcedureOrdersEndpoint
+  StoredProcedureOrdersEndpoint,
+  DeleteProductEndpoint
 } = require("./endpoints");
 
 const app = express();
@@ -53,3 +54,4 @@ OrdersEndpoints(app);
 CustomersEndpoints(app, admin, firebaseDb);
 ViewMoneyEndpoints(app);
 StoredProcedureOrdersEndpoint(app);
+DeleteProductEndpoint(app);
